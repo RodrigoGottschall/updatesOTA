@@ -23,6 +23,8 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
     res.json({ error: 'Expected GET.' });
     return;
   }
+  console.log('manifestEndpoint', req.headers, req.query);
+  
 
   const protocolVersionMaybeArray = req.headers['expo-protocol-version'];
   if (protocolVersionMaybeArray && Array.isArray(protocolVersionMaybeArray)) {
@@ -32,6 +34,8 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
     });
     return;
   }
+  console.log('protocolVersionMaybeArray', protocolVersionMaybeArray);
+  
   const protocolVersion = parseInt(protocolVersionMaybeArray ?? '0', 10);
 
   const platform = req.headers['expo-platform'] ?? req.query['platform'];
@@ -51,6 +55,8 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
     });
     return;
   }
+  console.log('runtimeVersion', runtimeVersion);
+  
 
   let updateBundlePath: string;
   try {
@@ -62,8 +68,12 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
     });
     return;
   }
+  console.log('updateBundlePath', updateBundlePath);
+  
 
   const updateType = await getTypeOfUpdateAsync(updateBundlePath);
+  console.log('updateType', updateType);
+  
 
   try {
     try {

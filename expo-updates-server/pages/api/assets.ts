@@ -10,6 +10,8 @@ import {
 } from '../../common/helpers';
 
 export default async function assetsEndpoint(req: NextApiRequest, res: NextApiResponse) {
+  console.log('assetsEndpoint', req.headers, req.query);
+  
   const { asset: assetName, runtimeVersion, platform } = req.query;
 
   if (!assetName || typeof assetName !== 'string') {
@@ -23,12 +25,16 @@ export default async function assetsEndpoint(req: NextApiRequest, res: NextApiRe
     res.json({ error: 'No platform provided. Expected "ios" or "android".' });
     return;
   }
+  console.log('platform', platform);
+  
 
   if (!runtimeVersion || typeof runtimeVersion !== 'string') {
     res.statusCode = 400;
     res.json({ error: 'No runtimeVersion provided.' });
     return;
   }
+  console.log('runtimeVersion', runtimeVersion);
+  
 
   let updateBundlePath: string;
   try {
