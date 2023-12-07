@@ -27,11 +27,11 @@ const configs = {
         url: "http://18.231.138.197/api/manifest",
         enabled: true,
         fallbackToCacheTimeout: 30000,
-        codeSigningCertificate: "./code-signing/certificate.pem",
-        codeSigningMetadata: {
-          keyid: "main",
-          alg: "rsa-v1_5-sha256",
-        },
+        // codeSigningCertificate: "./code-signing/certificate.pem",
+        // codeSigningMetadata: {
+        //   keyid: "main",
+        //   alg: "rsa-v1_5-sha256",
+        // },
       },
       androidStatusBar: {
         barStyle: "light-content",
