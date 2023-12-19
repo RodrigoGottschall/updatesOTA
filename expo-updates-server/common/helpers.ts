@@ -91,7 +91,7 @@ export async function getAssetMetadataAsync(arg: GetAssetMetadataArg) {
     key,
     fileExtension: `.${keyExtensionSuffix}`,
     contentType,
-    url: `${process.env.HOSTNAME}/api/assets?asset=${assetFilePath}&runtimeVersion=${arg.runtimeVersion}&platform=${arg.platform}`,
+    url: `http://18.231.138.197/api/assets?asset=${assetFilePath}&runtimeVersion=${arg.runtimeVersion}&platform=${arg.platform}`,
   };
 }
 
