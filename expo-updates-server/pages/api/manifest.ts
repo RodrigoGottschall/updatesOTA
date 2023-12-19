@@ -76,7 +76,10 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
   
 
   try {
+    console.log('TRY1');
+    
     try {
+      console.log('TRY2');
       if (updateType === UpdateType.NORMAL_UPDATE) {
         console.log('NORMAL UPDATEEEE');
         
