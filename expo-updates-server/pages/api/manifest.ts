@@ -72,7 +72,7 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
   
 
   const updateType = await getTypeOfUpdateAsync(updateBundlePath);
-  console.log('updateType', updateType);
+  console.log('SBURBLES', updateType);
   
 
   try {
