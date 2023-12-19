@@ -126,10 +126,14 @@ async function putUpdateInResponseAsync(
     updateBundlePath,
     runtimeVersion,
   });
+  console.log('metadataJson', metadataJson);
+  
 
   // NoUpdateAvailable directive only supported on protocol version 1
   // for protocol version 0, serve most recent update as normal
   if (currentUpdateId === id && protocolVersion === 1) {
+    console.log('PASSOU AQUI333');
+    
     throw new NoUpdateAvailableError();
   }
 
@@ -213,6 +217,8 @@ async function putUpdateInResponseAsync(
   res.setHeader('cache-control', 'private, max-age=0');
   res.setHeader('content-type', `multipart/mixed; boundary=${form.getBoundary()}`);
   res.write(form.getBuffer());
+  console.log("SUCCESS!!!!");
+  
   res.end();
 }
 
