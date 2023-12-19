@@ -78,6 +78,8 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
   try {
     try {
       if (updateType === UpdateType.NORMAL_UPDATE) {
+        console.log('NORMAL UPDATEEEE');
+        
         await putUpdateInResponseAsync(
           req,
           res,
@@ -87,9 +89,13 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
           protocolVersion
         );
       } else if (updateType === UpdateType.ROLLBACK) {
+        console.log('ROLLBACKKKKK');
+        
         await putRollBackInResponseAsync(req, res, updateBundlePath, protocolVersion);
       }
     } catch (maybeNoUpdateAvailableError) {
+      console.log("CATCH");
+      
       if (maybeNoUpdateAvailableError instanceof NoUpdateAvailableError) {
         await putNoUpdateAvailableInResponseAsync(req, res, protocolVersion);
         return;
@@ -287,6 +293,8 @@ async function putNoUpdateAvailableInResponseAsync(
   res: NextApiResponse,
   protocolVersion: number
 ): Promise<void> {
+  console.log('putNoUpdateAvailableInResponseAsync', req.headers, req.query);
+  
   if (protocolVersion === 0) {
     throw new Error('NoUpdateAvailable directive not available in protocol version 0');
   }
