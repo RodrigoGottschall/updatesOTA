@@ -1,1 +1,1 @@
-process.env.HOSTNAME = 'https://18.231.138.197/';
+process.env.HOSTNAME = ' ';
