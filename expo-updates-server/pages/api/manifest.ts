@@ -23,8 +23,6 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
     res.json({ error: 'Expected GET.' });
     return;
   }
-  console.log('manifestEndpoint', req.headers, req.query);
-  
 
   const protocolVersionMaybeArray = req.headers['expo-protocol-version'];
   if (protocolVersionMaybeArray && Array.isArray(protocolVersionMaybeArray)) {
@@ -34,7 +32,6 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
     });
     return;
   }
-  console.log('protocolVersionMaybeArray', protocolVersionMaybeArray);
   
   const protocolVersion = parseInt(protocolVersionMaybeArray ?? '0', 10);
 
@@ -55,8 +52,6 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
     });
     return;
   }
-  console.log('runtimeVersion', runtimeVersion);
-  
 
   let updateBundlePath: string;
   try {
@@ -68,21 +63,12 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
     });
     return;
   }
-  console.log('updateBundlePath', updateBundlePath);
-  
 
   const updateType = await getTypeOfUpdateAsync(updateBundlePath);
-  console.log('SBURBLES', updateType);
-  
 
   try {
-    console.log('TRY1');
-    
     try {
-      console.log('TRY2');
       if (updateType === UpdateType.NORMAL_UPDATE) {
-        console.log('NORMAL UPDATEEEE');
-        
         await putUpdateInResponseAsync(
           req,
           res,
@@ -91,14 +77,10 @@ export default async function manifestEndpoint(req: NextApiRequest, res: NextApi
           platform,
           protocolVersion
         );
-      } else if (updateType === UpdateType.ROLLBACK) {
-        console.log('ROLLBACKKKKK');
-        
+      } else if (updateType === UpdateType.ROLLBACK) {        
         await putRollBackInResponseAsync(req, res, updateBundlePath, protocolVersion);
       }
-    } catch (maybeNoUpdateAvailableError) {
-      console.log("CATCH");
-      
+    } catch (maybeNoUpdateAvailableError) {      
       if (maybeNoUpdateAvailableError instanceof NoUpdateAvailableError) {
         await putNoUpdateAvailableInResponseAsync(req, res, protocolVersion);
         return;
@@ -135,14 +117,10 @@ async function putUpdateInResponseAsync(
     updateBundlePath,
     runtimeVersion,
   });
-  console.log('metadataJson', metadataJson);
-  
 
   // NoUpdateAvailable directive only supported on protocol version 1
   // for protocol version 0, serve most recent update as normal
   if (currentUpdateId === id && protocolVersion === 1) {
-    console.log('PASSOU AQUI333');
-    
     throw new NoUpdateAvailableError();
   }
 
@@ -226,8 +204,6 @@ async function putUpdateInResponseAsync(
   res.setHeader('cache-control', 'private, max-age=0');
   res.setHeader('content-type', `multipart/mixed; boundary=${form.getBoundary()}`);
   res.write(form.getBuffer());
-  console.log("SUCCESS!!!!", JSON.stringify(manifest));
-  
   res.end();
 }
 
@@ -296,8 +272,6 @@ async function putNoUpdateAvailableInResponseAsync(
   res: NextApiResponse,
   protocolVersion: number
 ): Promise<void> {
-  console.log('putNoUpdateAvailableInResponseAsync', req.headers, req.query);
-  
   if (protocolVersion === 0) {
     throw new Error('NoUpdateAvailable directive not available in protocol version 0');
   }
