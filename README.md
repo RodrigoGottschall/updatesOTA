@@ -1,5 +1,3 @@
-# Comandos custom-expo-update-server
-
 Passo a passo para rodar expo update server:
 
 SERVER
